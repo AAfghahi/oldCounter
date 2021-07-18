@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "lifeCounter",
+    "slug": "lifeCounter",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "lifeCounter"
+}
