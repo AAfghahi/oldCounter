@@ -11,16 +11,16 @@ const Stack = createStackNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
+      <Stack.Navigator initialRouteName="Home" >
         <Stack.Screen
           name="Home"
           component={HomeScreen}
-          options={{ title: 'Life Counter' }}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="Counter"
           component={Counter}
-          options={{title:'Counter'}}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>

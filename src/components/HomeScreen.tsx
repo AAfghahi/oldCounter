@@ -10,7 +10,7 @@ const HomeScreen = ({navigation}) => {
       colors={['#22c1c3','#fdbb2d','#7332c1', 'transparent']}
       style={styles.background}
       />
-      <Text style={styles.text}>How Many Players</Text>
+      <Text style={styles.text}>How Many Players?</Text>
       <Button
         title="2"
         onPress={() => navigation.navigate('Counter', {players: 2})}
