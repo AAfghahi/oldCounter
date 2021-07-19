@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
         fontSize:64
     },
     background:{
-        height:height,
+        flex:1,
         backgroundColor:'pink',
         alignItems: 'center',
         justifyContent: 'space-between',

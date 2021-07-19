@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { TouchableOpacity, Text, View, Dimensions, StyleSheet } from 'react-native';
 import { IconButton } from 'react-native-paper';
 
-const height = (Dimensions.get('window').height)/2.15;
+const height = (Dimensions.get('window').height)/3;
 
 interface UpScreenTypes{
     life: number,
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
         fontSize:64
     },
     background:{
-        height:height,
+        flex:1,
         backgroundColor:'#75E6DA',
         alignItems: 'center',
         justifyContent: 'space-between',
