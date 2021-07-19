@@ -1,141 +1,27 @@
-import React, { useState } from 'react';
-import { TouchableOpacity, Text, View, Dimensions, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Dimensions, StyleSheet } from 'react-native';
 import { IconButton, Colors } from 'react-native-paper';
+import UpPlayer from './Players/UpPlayer';
+import DownPlayer from './Players/DownPlayer';
 
 
 const height = (Dimensions.get('window').height)/2.15;
 const width = Dimensions.get('window').width
 const Counter = ({route}) => {
-    const [pOneLife, setPOneLife] = useState<number>(20)
-    const [pTwoLife, setPTwoLife] = useState<number>(20)
+    const [life, setLife] = useState<number>(route.params.players > 2 ? 40 : 20);
+    const [newGame, setNewGame] = useState<boolean>(false)
 
     const onClickReset = () => {
-        setPOneLife(20);
-        setPTwoLife(20);
+        const playerPool = route.params.players > 2 ? 40 : 20
+        setLife(playerPool);
+        setNewGame(!newGame)
     }
 
-    const oneP1LifeDown = () => {
-        setPOneLife(pOneLife - 1);
-    }
-
-    const fiveP1LifeDown = () => {
-        setPOneLife(pOneLife - 5)
-    }
-
-    const oneP1LifeUp = () => {
-        setPOneLife(pOneLife + 1);
-    }
-
-    const fiveP1LifeUp = () => {
-        setPOneLife(pOneLife + 5)
-    }
-    const oneP2LifeDown = () => {
-        setPTwoLife(pTwoLife - 1);
-    }
-
-    const fiveP2LifeDown = () => {
-        setPOneLife(pTwoLife - 5)
-    }
-    const oneP2LifeUp = () => {
-        setPTwoLife(pTwoLife + 1);
-    }
-    const fiveP2LifeUp = () => {
-        setPOneLife(pTwoLife + 5)
-    }
-
-    const p1Screen = () => (
-        <View style={styles.p1Background}>
-                <IconButton
-                    icon="chevron-left"
-                    onPress={oneP1LifeDown}
-                    style={styles.oneLifeDownButton}
-                    hitSlop={{top:150, bottom:150}}
-                /> 
-                <TouchableOpacity
-                    onPress={fiveP1LifeDown}
-                    style={styles.p1lifeButtons}
-                >
-                    <Text style={[styles.ButtonText, {transform: [{rotate: '180deg'}]}]}>-5</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={oneP1LifeDown}
-                    style={styles.p1lifeButtons}
-                >
-                    <Text style={[styles.ButtonText, {transform: [{rotate: '180deg'}]}]}>-1</Text>
-                </TouchableOpacity>
-                <Text style={[styles.text, {transform: [{rotate: '180deg'}]}]}>
-                    {pOneLife}
-                </Text>
-                <TouchableOpacity
-                    onPress={oneP1LifeUp}
-                    style={styles.p1lifeButtons}
-                >
-                    <Text style={[styles.ButtonText, {transform: [{rotate: '180deg'}]}]}>+1</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={fiveP1LifeUp}
-                    style={styles.p1lifeButtons}
-                >
-                    <Text style={[styles.ButtonText, {transform: [{rotate: '180deg'}]}]}>+5</Text>
-                </TouchableOpacity>
-                <IconButton
-                    icon="chevron-right"
-                    onPress={oneP1LifeUp}
-                    style={styles.oneLifeUpButton}
-                    hitSlop={{top:150, bottom:150}}
-                />
-        </View>
-    )
-
-
-    const p2Screen = () => (
-        <View style={styles.p2Background}>
-                <IconButton
-                    icon="chevron-left"
-                    onPress={oneP2LifeDown}
-                    style={styles.oneLifeDownButton}
-                    hitSlop={{top:150, bottom:150}}
-                /> 
-                <TouchableOpacity
-                    onPress={fiveP2LifeDown}
-                    style={styles.p2lifeButtons}
-                >
-                    <Text style={styles.ButtonText}>-5</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={oneP2LifeDown}
-                    style={styles.p2lifeButtons}
-                >
-                    <Text style={styles.ButtonText}>-1</Text>
-                </TouchableOpacity>
-                <Text style={styles.text}>
-                    {pTwoLife}
-                </Text>
-                <TouchableOpacity
-                    onPress={oneP2LifeUp}
-                    style={styles.p2lifeButtons}
-                >
-                    <Text style={styles.ButtonText}>+1</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={fiveP2LifeUp}
-                    style={styles.p2lifeButtons}
-                >
-                    <Text style={styles.ButtonText}>+5</Text>
-                </TouchableOpacity>
-                <IconButton
-                    icon="chevron-right"
-                    onPress={oneP2LifeUp}
-                    style={styles.oneLifeUpButton}
-                    hitSlop={{top:150, bottom:150}}
-                />
-            </View>
-    )
     return(
         <View style={styles.container}>
-            {p1Screen()}
+            <UpPlayer life={life} newGame={newGame}/>
             <IconButton icon="restore" size={30} color={Colors.white} style={styles.reset_button} onPress={onClickReset}/>
-            {p2Screen()}
+            <DownPlayer life={life} newGame={newGame} />
         </View>
     )
 }
