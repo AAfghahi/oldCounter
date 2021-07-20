@@ -2,10 +2,18 @@
   "expo": {
     "name": "lifeCounter",
     "slug": "lifeCounter",
+    "icon":"./icons8-dice-48.png",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
-    ]
-  },
-  "name": "lifeCounter"
+    ],
+    "ios": {
+      "bundleIdentifier": "com.arash.lifeCounter",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "package": "com.arash.lifeCounter",
+      "versionCode": 1
+  }
+}
 }

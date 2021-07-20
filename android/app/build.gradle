@@ -148,10 +148,10 @@ android {
     }
     signingConfigs {
         debug {
-            storeFile file('debug.keystore')
-            storePassword 'android'
-            keyAlias 'androiddebugkey'
-            keyPassword 'android'
+            storeFile file('life_counter.keystore')
+            storePassword System.console().readLine("\nKeystore password:")
+            keyAlias System.console().readLine("\nAlias: "
+            keyPassword System.console().readLine("\Alias password: ")
         }
     }
     buildTypes {
