@@ -1,10 +1,18 @@
 import React from 'react';
-import { Button, StyleSheet, Text, View, Dimensions, TouchableOpacity, } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, TouchableOpacity, } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
  
 const height = Dimensions.get('window').height;
 const width = (Dimensions.get('window').width) / 2.5
 const HomeScreen = ({navigation}) => {
+  const Button = (players) => (
+    <TouchableOpacity
+    style={styles.button}
+    onPress={() => navigation.navigate('Counter', {players: players})}
+    >
+      <Text style={styles.buttonText}> {players} </Text>
+    </TouchableOpacity>
+  )
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -12,18 +20,10 @@ const HomeScreen = ({navigation}) => {
       style={styles.background}
       />
       <Text style={styles.text}>How Many Players?</Text>
-      <TouchableOpacity
-      style={styles.button}
-      onPress={() => navigation.navigate('Counter', {players: 2})}
-      >
-        <Text style={styles.buttonText}> 2 </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-      style={styles.button}
-      onPress={() => navigation.navigate('Counter', {players: 4})}
-      >
-        <Text style={styles.buttonText}> 4 </Text>
-      </TouchableOpacity>
+      {Button(1)}
+      {Button(2)}
+      {Button(3)}
+      {Button(4)}
     </View>
   );
 }

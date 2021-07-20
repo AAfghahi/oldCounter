@@ -1,23 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TouchableOpacity, Text, View, Dimensions, StyleSheet } from 'react-native';
 import { IconButton } from 'react-native-paper';
 
-const height = (Dimensions.get('window').height)/3;
-
-interface UpScreenTypes{
+interface DownScreenTypes{
     life: number,
     newGame: boolean,
+    randomColor: string,
 }
 
-const UpScreen = (props: UpScreenTypes) => {
+const Player = (props: DownScreenTypes) => {
     const [life, setLife] = useState<number>(props.life)
-    
+
     useEffect(()=>{
         setLife(props.life)
     }, [props.newGame])
 
     return(
-        <View style={styles.background}>
+        <View style={[styles.background, {backgroundColor: props.randomColor}]}>
                 <IconButton
                     icon="chevron-left"
                     onPress={() => setLife(life - 1)}
@@ -28,28 +27,28 @@ const UpScreen = (props: UpScreenTypes) => {
                     onPress={() => setLife(life - 5)}
                     style={styles.lifeButtons}
                 >
-                    <Text style={[styles.ButtonText, {transform: [{rotate: '180deg'}]}]}>-5</Text>
+                    <Text style={styles.ButtonText}>-5</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => setLife(life - 1)}
                     style={styles.lifeButtons}
                 >
-                    <Text style={[styles.ButtonText, {transform: [{rotate: '180deg'}]}]}>-1</Text>
+                    <Text style={styles.ButtonText}>-1</Text>
                 </TouchableOpacity>
-                <Text style={[styles.text, {transform: [{rotate: '180deg'}]}]}>
+                <Text style={styles.text}>
                     {life}
                 </Text>
                 <TouchableOpacity
                     onPress={() => setLife(life + 1)}
                     style={styles.lifeButtons}
                 >
-                    <Text style={[styles.ButtonText, {transform: [{rotate: '180deg'}]}]}>+1</Text>
+                    <Text style={styles.ButtonText}>+1</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => setLife(life + 5)}
                     style={styles.lifeButtons}
                 >
-                    <Text style={[styles.ButtonText, {transform: [{rotate: '180deg'}]}]}>+5</Text>
+                    <Text style={styles.ButtonText}>+5</Text>
                 </TouchableOpacity>
                 <IconButton
                     icon="chevron-right"
@@ -62,7 +61,7 @@ const UpScreen = (props: UpScreenTypes) => {
     )
 }
 
-export default UpScreen;
+export default Player;
 
 const styles = StyleSheet.create({
     text: {
@@ -70,10 +69,10 @@ const styles = StyleSheet.create({
     },
     background:{
         flex:1,
-        backgroundColor:'#75E6DA',
+        backgroundColor:'transparent',
         alignItems: 'center',
         justifyContent: 'space-between',
-        flexDirection:'row',
+        flexDirection:'row'
     },
     oneLifeDownButton: {
         backgroundColor:'transparent',
@@ -84,12 +83,12 @@ const styles = StyleSheet.create({
         alignSelf:'center'
     },
     lifeButtons: {
-        backgroundColor:'#00B7AF',
-        alignSelf:'flex-start',
-        marginTop:24,
+        backgroundColor:'#778a7b',
+        alignSelf:'flex-end',
+        marginBottom:10,
         borderRadius:30,
-        width:60,
-        height:60,
+        width:'12%',
+        height:'14%',
         justifyContent:'center'
     },
     ButtonText: {

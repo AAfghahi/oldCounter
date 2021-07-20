@@ -1,39 +1,50 @@
 import React, { useState, useEffect } from 'react';
 import { View, Dimensions, StyleSheet } from 'react-native';
 import { IconButton, Colors } from 'react-native-paper';
-import UpPlayer from './Players/UpPlayer';
-import DownPlayer from './Players/DownPlayer';
+import Player from './Player';
 import * as ScreenOrientation from 'expo-screen-orientation';
+
+const height = (Dimensions.get('window').height)/1.05
 
 const Counter = ({route}) => {
     const [life, setLife] = useState<number>(route.params.players > 2 ? 40 : 20);
     const [newGame, setNewGame] = useState<boolean>(false)
-
-    useEffect(()=> {
-        if(route.params.players < 3) {
-            ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP)
-        }else {
-            ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE) 
+    let usedColors = []
+    const randomColor = () => {
+        const colors = ['#FF9AA2','#FFB7B2','#FFDAC1', '#E2F0CB', '#B5EAD7', '#C7CEEA', '#ffb3ba', '#ffdfba', '#ffffba', '#baffc9', '#bae1ff', '#CAB3C1']
+        let rand = Math.floor(Math.random() * colors.length)
+    
+        if(!usedColors.includes(colors[rand])){
+            usedColors.push(colors[rand]);
+            return colors[rand]
+        } else {
+            return randomColor()
         }
-    }, [])
+        
+    }
+
 
     const upPlayer = () => (
         route.params.players < 3 ?
-            <UpPlayer life={life} newGame={newGame}/>
+            <View style={ [styles.playerContainer, {transform: [{rotate: '180deg'}]}]}>
+                <Player life={life} newGame={newGame} randomColor={randomColor()}/>
+            </View>
         :
-            <View style={styles.playerContainer}>
-                <UpPlayer life={life} newGame={newGame}/>
-                <UpPlayer life={life} newGame={newGame}/>
+            <View style={[styles.multiplayerContainer, {transform: [{rotate: '180deg'}]}]}>
+                <Player life={life} newGame={newGame} randomColor={randomColor()}/>
+                <Player life={life} newGame={newGame} randomColor={randomColor()}/>
             </View>
     )
 
     const downPlayer = () => (
-        route.params.players < 3 ?
-            <DownPlayer life={life} newGame={newGame} />
-        :
+        route.params.players < 4 ?
             <View style={styles.playerContainer}>
-                <DownPlayer life={life} newGame={newGame} />
-                <DownPlayer life={life} newGame={newGame} />
+                <Player life={life} newGame={newGame} randomColor={randomColor()}/>
+            </View>
+        :
+            <View style={styles.multiplayerContainer}>
+                <Player life={life} newGame={newGame} randomColor={randomColor()}/>
+                <Player life={life} newGame={newGame} randomColor={randomColor()}/>
             </View>
     )
 
@@ -45,7 +56,7 @@ const Counter = ({route}) => {
 
     return(
         <View style={styles.container}>
-            {upPlayer()}
+            {route.params.players !== 1 && upPlayer()}
             <IconButton icon="restore" size={30} color={Colors.white} style={styles.reset_button} onPress={onClickReset}/>
             {downPlayer()}
         </View>
@@ -57,14 +68,20 @@ export default Counter;
 const styles = StyleSheet.create({
     container:{
         flex:1,
+        flexGrow:1,
+        marginTop:'auto',
         backgroundColor: 'black'
     },
     reset_button: {
         alignSelf: 'center',
     },
-    playerContainer: {
+    multiplayerContainer: {
         display: 'flex',
         flexDirection: 'row',
+        flex:.5
+    },
+    playerContainer: {
+        display:'flex',
         flex:1
     }
 })
